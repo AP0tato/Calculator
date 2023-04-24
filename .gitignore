@@ -1,5 +1,5 @@
-.pyc
-/lib
-/include
-/build
-/.vs
+*.pyc
+./lib
+./include
+./build
+./.vs
