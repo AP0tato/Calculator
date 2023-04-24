@@ -15,7 +15,7 @@ int main()
 
     std::string equ;
     std::vector<std::string> v;
-    std::ifstream file("./Cases.txt");
+    std::ifstream file("./Input.txt");
 
     BinaryTree *tree = new BinaryTree("+");
     Parser *p;
