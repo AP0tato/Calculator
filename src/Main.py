@@ -1,9 +1,9 @@
-from tkinter import *
 import os
+os.system("cd ../Calculator/ && g++ Main.cpp BinaryTree.cpp Parser.cpp -o ../src/Main")
+
+from tkinter import *
 
 main = Tk()
-
-os.system("cd ../Calculator/ && g++ Main.cpp BinaryTree.cpp Parser.cpp -o ../src/Main")
 
 numButtons = [ Button(main, text=i) for i in range(10) ]
 
