@@ -2,18 +2,28 @@ import os
 os.system("cd ../Calculator/ && g++ Main.cpp BinaryTree.cpp Parser.cpp -o ../src/Main")
 
 from tkinter import *
+import math as m
 
 main = Tk()
 
-numButtons = [ Button(main, text=i) for i in range(10) ]
+main.geometry('600x700')
+#main.config(background='#FFFFFF')
+
+numButtons = [ Button(main, text=i, width=10, height=5) for i in range(10) ]
 
 for i in range(10):
-    numButtons[i].pack()
+    numButtons[i].grid(column=(i-1)%3, row=int((9-i)/3))
+numButtons[0].grid(column=0, row=3)
 
 functions = ['=', '-', '+', '*', '/', ".", "%"]
-funcButtons = [ Button(main, text=x) for x in functions ]
+funcButtons = [ Button(main, text=x, width=10, height=5) for x in functions ]
 
-for i in range(len(funcButtons)):
-    funcButtons[i].pack()
+funcButtons[1].grid(column=4, row=1)
+funcButtons[2].grid(column=4, row=0)
+funcButtons[3].grid(column=4, row=2)
+funcButtons[4].grid(column=4, row=3)
+funcButtons[5].grid(column=1, row=3)
+funcButtons[6].grid(column=2, row=3)
+funcButtons[0].grid(column=0, row=4, columnspan=5, sticky='ew')
 
 main.mainloop()

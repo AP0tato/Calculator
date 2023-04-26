@@ -5,3 +5,4 @@ build/
 .vs/
 *.exe
 Main
+.vscode/

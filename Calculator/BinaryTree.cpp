@@ -44,6 +44,7 @@ class BinaryTree
             }
             else
                 return std::stod(tree->getRoot());
+            return 0.0;
         }
 
         BinaryTree* parse(std::vector<std::string> v)
