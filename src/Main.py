@@ -1,6 +1,3 @@
-import os
-os.system("cd ../Calculator/ && g++ Main.cpp BinaryTree.cpp Parser.cpp -o ../src/Main")
-
 from tkinter import *
 import math as m
 
