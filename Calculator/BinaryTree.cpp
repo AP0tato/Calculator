@@ -1,6 +1,12 @@
 #include <string>
 #include <vector>
 
+
+#include <stack>
+
+
+#pragma once
+
 class BinaryTree
 {
     BinaryTree *left;
@@ -49,7 +55,7 @@ class BinaryTree
 
         BinaryTree* parse(std::vector<std::string> v)
         {
-            std::vector<BinaryTree*> stack;
+            std::stack<BinaryTree*> stack;
             BinaryTree *tree = new BinaryTree("+");
             BinaryTree *t = tree;
             stack.push_back(tree);
