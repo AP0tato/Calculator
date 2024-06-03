@@ -1,9 +1,6 @@
 #include <string>
 #include <vector>
-
-
 #include <stack>
-
 
 #pragma once
 
@@ -58,8 +55,8 @@ class BinaryTree
             std::stack<BinaryTree*> stack;
             BinaryTree *tree = new BinaryTree("+");
             BinaryTree *t = tree;
-            stack.push_back(tree);
-            stack.push_back(tree);
+            stack.push(tree);
+            stack.push(tree);
             tree->insertLeft("");
             tree = tree->getLeft();
 
@@ -68,21 +65,21 @@ class BinaryTree
                 if(v[i]==")")
                 {
                     tree->setRoot(v[i-1]);
-                    tree = stack.back();
-                    stack.pop_back();
+                    tree = stack.top();
+                    stack.pop();
                 }
                 else if(v[i]=="(")
                 {
                     if(tree->getLeft()==nullptr)
                     {
                         tree->insertLeft("");
-                        stack.push_back(tree);
+                        stack.push(tree);
                         tree = tree->getLeft();
                     }
                     else
                     {
                         tree->insertRight("");
-                        stack.push_back(tree);
+                        stack.push(tree);
                         tree = tree->getRight();
                     }
                 }
@@ -106,8 +103,8 @@ class BinaryTree
 
                     if ( (!((v[i+2]=="*") || (v[i+2]=="/"))) && v[i+1]!="(")
                     {
-                        tree = stack.back();
-                        stack.pop_back();
+                        tree = stack.top();
+                        stack.pop();
                     }
                 }
                 else if((v[i]=="+") || (v[i]=="-"))
