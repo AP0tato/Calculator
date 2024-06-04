@@ -5,4 +5,7 @@ build/
 .vs/
 *.exe
 Main
+Input.txt
 .vscode/
+Results.txt
+Main.dYSM/

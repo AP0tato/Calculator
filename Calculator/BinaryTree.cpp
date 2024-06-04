@@ -15,7 +15,7 @@ class BinaryTree
         BinaryTree(std::string r) { left = nullptr; right = nullptr; root=r; }
         BinaryTree(std::string ro, BinaryTree *l, BinaryTree *r) { left = l; right = r; root = ro; }
 
-        std::string getRoot() { return root; }
+        std::string getRoot() { return root ; }
         void setRoot(std::string r) { root = r; }
 
         BinaryTree* getLeft() { return left; }
@@ -50,7 +50,7 @@ class BinaryTree
             return 0.0;
         }
 
-        BinaryTree* parse(std::vector<std::string> v)
+        BinaryTree* createTree(std::vector<std::string> v)
         {
             std::stack<BinaryTree*> stack;
             BinaryTree *tree = new BinaryTree("+");
@@ -59,68 +59,50 @@ class BinaryTree
             stack.push(tree);
             tree->insertLeft("");
             tree = tree->getLeft();
+            std::string prev = v[0];
 
             for(unsigned int i = 0; i < v.size(); i++)
             {
-                if(v[i]==")")
+                try { prev = v[i-1]; }
+                catch(const std::exception& e) {}
+                
+                if(v[i]=="(")
                 {
-                    tree->setRoot(v[i-1]);
+                    tree->setRoot(isNumber(prev)?v[i]:prev);
+                    tree->insertLeft("");
+                    stack.push(tree);
+                    tree = tree->getLeft();
+                }
+                else if(v[i]==")")
+                {
                     tree = stack.top();
                     stack.pop();
                 }
-                else if(v[i]=="(")
+                else if(v[i]=="^")
                 {
-                    if(tree->getLeft()==nullptr)
-                    {
-                        tree->insertLeft("");
-                        stack.push(tree);
-                        tree = tree->getLeft();
-                    }
-                    else
-                    {
-                        tree->insertRight("");
-                        stack.push(tree);
-                        tree = tree->getRight();
-                    }
+                    tree->setRoot("^");
                 }
-                else if((v[i]=="*") || (v[i]=="/"))
+                else if(v[i]=="*")
                 {
-                    tree->setRoot(v[i]);
-                    if((v[i+2]=="*") || (v[i+2]=="/"))
-                    {
-                        tree->insertRight("");
-                        tree->insertLeft(v[i-1]);
-                        tree = tree->getRight();
-                    }
-                    else if(tree->getLeft()==nullptr)
-                    {
-                        tree->insertLeft(v[i-1]);
-                        if(isNumber(v[i+1]))
-                            tree->insertRight(v[i+1]);
-                    }
-                    else
-                        tree->insertRight(v[i+1]);
+                    tree->setRoot("*");
+                }
+                else if(v[i]=="/")
+                {
+                    tree->setRoot("/");
+                }
+                else if(v[i]=="+")
+                {
+                    tree->setRoot("+");
+                }
+                else if(v[i]=="-")
+                {
+                    tree->setRoot("-");
+                }
+                else
+                {
 
-                    if ( (!((v[i+2]=="*") || (v[i+2]=="/"))) && v[i+1]!="(")
-                    {
-                        tree = stack.top();
-                        stack.pop();
-                    }
-                }
-                else if((v[i]=="+") || (v[i]=="-"))
-                {
-                    tree->setRoot(v[i]);
-                    if(tree->getLeft()==nullptr)
-                        tree->insertLeft(v[i-1]);
-                    if(v[i+1]==")")
-                        tree->insertRight(v[i+1]);
-                    else 
-                        tree->insertRight("");
-                    tree = tree->getRight();
                 }
             }
-            if(!tree->getRight())
-                tree->insertRight("0");
 
             return t;
         }        

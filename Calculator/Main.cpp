@@ -5,6 +5,8 @@
 #include "BinaryTree.cpp"
 #include "Parser.cpp"
 
+#pragma once
+
 void write(std::string s, std::string filePath);
 
 int main()
@@ -23,7 +25,7 @@ int main()
     while(std::getline(file, equ))
     {
         v = p->parse(equ);
-        tree = tree->parse(v);
+        tree = tree->createTree(v);
         double ans = tree->eval(tree);
         write(std::to_string(ans), "./Results.txt");
     }
