@@ -2,7 +2,6 @@
 lib/
 include/
 build/
-.vs/
 *.exe
 Main
 Input.txt
