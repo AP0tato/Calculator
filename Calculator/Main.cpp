@@ -5,8 +5,6 @@
 #include "BinaryTree.cpp"
 #include "Parser.cpp"
 
-#pragma once
-
 void write(std::string s, std::string filePath);
 
 int main()

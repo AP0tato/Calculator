@@ -35,6 +35,8 @@ class BinaryTree
                 r = eval(right);
                 switch (op[0])
                 {
+                case '^':
+                    return pow(l, r);
                 case '*':
                     return l*r;
                 case '/':
@@ -56,22 +58,33 @@ class BinaryTree
             BinaryTree *tree = new BinaryTree("+");
             BinaryTree *t = tree;
             stack.push(tree);
-            stack.push(tree);
-            tree->insertLeft("");
-            tree = tree->getLeft();
+            // tree->insertLeft("");
+            // tree = tree->getLeft();
             std::string prev = v[0];
+            std::string next = v[1];
 
-            for(unsigned int i = 0; i < v.size(); i++)
+            for(unsigned int i = 0; i < v.size()-1; i++)
             {
-                try { prev = v[i-1]; }
-                catch(const std::exception& e) {}
+                if(i>0)
+                    prev = v[i-1];
+                next = v[i+1];
                 
                 if(v[i]=="(")
                 {
-                    tree->setRoot(isNumber(prev)?v[i]:prev);
-                    tree->insertLeft("");
-                    stack.push(tree);
-                    tree = tree->getLeft();
+                    if(isNumber(prev))
+                    {
+                        tree->setRoot("*");
+                        stack.push(tree);
+                        tree->insertLeft(prev);
+                        tree->insertRight("");
+                        tree = tree->getRight();
+                    }
+                    else
+                    {
+                        stack.push(tree);
+                        tree->insertLeft("");
+                        tree = tree->getLeft();
+                    }
                 }
                 else if(v[i]==")")
                 {
@@ -81,29 +94,66 @@ class BinaryTree
                 else if(v[i]=="^")
                 {
                     tree->setRoot("^");
+                    stack.push(tree);
+                    if(prev!=")")
+                        tree->insertLeft(prev);
+                    tree->insertRight("");
+                    tree = tree->getRight();
                 }
                 else if(v[i]=="*")
                 {
                     tree->setRoot("*");
+                    stack.push(tree);
+                    if(prev!=")")
+                        tree->insertLeft(prev);
+                    tree->insertRight("");
+                    tree = tree->getRight();
                 }
                 else if(v[i]=="/")
                 {
                     tree->setRoot("/");
+                    stack.push(tree);
+                    if(prev!=")")
+                        tree->insertLeft(prev);
+                    tree->insertRight("");
+                    tree = tree->getRight();
                 }
                 else if(v[i]=="+")
                 {
                     tree->setRoot("+");
+                    stack.push(tree);
+                    if(prev!=")")
+                        tree->insertLeft(prev);
+                    tree->insertRight("");
+                    tree = tree->getRight();
                 }
                 else if(v[i]=="-")
                 {
                     tree->setRoot("-");
+                    stack.push(tree);
+                    if(prev!=")")
+                        tree->insertLeft(prev);
+                    tree->insertRight("");
+                    tree = tree->getRight();
                 }
                 else
                 {
-
+                    if(next!="*"||next!="/"||next!="^"||next!="(")
+                    {
+                        tree->setRoot(v[i]);
+                        tree = stack.top();
+                        stack.pop();
+                    }
+                    else
+                    {
+                        stack.push(tree);
+                        tree->setRoot(next==")"?"*":next);
+                        tree->insertLeft(v[i]);
+                        tree->insertRight("");
+                        tree = tree->getRight();
+                    }
                 }
             }
-
             return t;
         }        
 
